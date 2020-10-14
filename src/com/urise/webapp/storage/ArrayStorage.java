@@ -2,44 +2,45 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
 
+import java.util.Arrays;
+
 /**
  * Array based storage for Resumes
  */
 
 public class ArrayStorage {
-    Resume[] storage = new Resume[10000];
-    int counter;
+    private Resume[] storage = new Resume[10_000];
+    private int counter;
 
     public void clear() {
-        for (int i = 0; i < counter; i++) {
-            storage[i] = null;
-        }
+        Arrays.fill(storage, 0, counter - 1, null);
         counter = 0;
     }
 
-    public void save(Resume r) {
-        if (counter == 10000)
+    public void save(Resume resume) {
+        if (counter == storage.length) {
             System.out.println("storage is full");
-        else if (isSaved(r.getUuid()) == -1) {
-            storage[counter] = r;
+        } else if (getIndex(resume.getUuid()) == -1) {
+            storage[counter] = resume;
             counter++;
-        } else
-            System.out.println("resume is already exist");
+        } else {
+            System.out.println("resume " + resume.getUuid() + " is already exist");
+        }
     }
 
     public Resume get(String uuid) {
-        int index = isSaved(uuid);
+        int index = getIndex(uuid);
         if (index == -1) {
-            System.out.println("resume is not found");
+            System.out.println("resume " + uuid + " is not found");
             return null;
         }
         return storage[index];
     }
 
     public void delete(String uuid) {
-        int index = isSaved(uuid);
+        int index = getIndex(uuid);
         if (index == -1) {
-            System.out.println("resume is not found");
+            System.out.println("resume " + uuid + " is not found");
         } else {
             storage[index] = storage[counter - 1];
             storage[counter - 1] = null;
@@ -60,19 +61,21 @@ public class ArrayStorage {
         return counter;
     }
 
-    public void update(Resume r) {
-        int index = isSaved(r.getUuid());
+    public void update(Resume resume) {
+        int index = getIndex(resume.getUuid());
         if (index == -1) {
-            System.out.println("resume is not found");
+            System.out.println("resume " + resume.getUuid() + " is not found");
         } else {
-            System.out.println("resume is updated");
+            storage[index] = resume;
+            System.out.println("resume " + resume.getUuid() + " is updated");
         }
     }
 
-    public int isSaved(String uuid) {
+    private int getIndex(String uuid) {
         for (int i = 0; i < counter; i++) {
-            if (uuid.equals(storage[i].getUuid()))
+            if (uuid.equals(storage[i].getUuid())) {
                 return i;
+            }
         }
         return -1;
     }
