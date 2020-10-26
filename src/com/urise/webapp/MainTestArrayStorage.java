@@ -17,7 +17,7 @@ public class MainTestArrayStorage {
         Resume r3 = new Resume();
         r3.setUuid("uuid3");
         Resume r4 = new Resume();
-        r4.setUuid("uuid7");
+        r4.setUuid("uuid3");
         Resume r5 = new Resume();
         r5.setUuid("dummy");
 

@@ -6,12 +6,8 @@ import java.util.Arrays;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
 
-    public void save(Resume resume) {
-        int index = getIndex(resume.getUuid());
-        System.out.println(index);
-        if (counter == storage.length) {
-            System.out.println("storage is full");
-        } else if (counter == 0) {
+    protected void innerSave(Resume resume, int index) {
+        if (counter == 0) {
             storage[0] = resume;
             counter++;
         } else if (-index - 1 == counter) {
@@ -23,20 +19,12 @@ public class SortedArrayStorage extends AbstractArrayStorage {
             }
             storage[-index - 1] = resume;
             counter++;
-        } else {
-            System.out.println("resume " + resume.getUuid() + " is already exist");
         }
     }
 
-    public void delete(String uuid) {
-        int index = getIndex(uuid);
-        if (index < 0) {
-            System.out.println("resume " + uuid + " is not found");
-        } else {
-            for (int i = index; i < counter - 1; i++) {
-                storage[i] = storage[i + 1];
-            }
-            counter--;
+    protected void innerDelete(int index) {
+        for (int i = index; i < counter - 1; i++) {
+            storage[i] = storage[i + 1];
         }
     }
 

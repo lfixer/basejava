@@ -17,12 +17,16 @@ public class MainTestSortedArrayStorage {
         r4.setUuid("uuid18");
         Resume r5 = new Resume();
         r5.setUuid("uuid6");
+        Resume r6 = new Resume();
+        r6.setUuid("uuid6");
 
         ARRAY_STORAGE.save(r1);
         ARRAY_STORAGE.save(r2);
         ARRAY_STORAGE.save(r3);
         ARRAY_STORAGE.save(r4);
         ARRAY_STORAGE.save(r5);
+        ARRAY_STORAGE.save(r6);
+        ARRAY_STORAGE.update(r6);
 
         printAll();
         ARRAY_STORAGE.delete(r5.getUuid());
