@@ -11,7 +11,7 @@ public abstract class AbstractArrayStorage implements Storage {
     protected int counter = 0;
 
     public void clear() {
-        Arrays.fill(storage, 0, counter-1+1 , null);
+        Arrays.fill(storage, 0, counter - 1 + 1, null);
         counter = 0;
     }
 
@@ -50,6 +50,7 @@ public abstract class AbstractArrayStorage implements Storage {
             System.out.println("storage is full");
         } else if (index < 0) {
             innerSave(resume, index);
+            counter++;
         } else {
             System.out.println("resume " + resume.getUuid() + " is already exist");
         }
@@ -61,8 +62,9 @@ public abstract class AbstractArrayStorage implements Storage {
             System.out.println("resume " + uuid + " is not found");
         } else {
             innerDelete(index);
-            }
+            storage[counter - 1] = null;
             counter--;
+        }
     }
 
     protected abstract int getIndex(String uuid);
@@ -72,5 +74,3 @@ public abstract class AbstractArrayStorage implements Storage {
     protected abstract void innerSave(Resume resume, int index);
 
 }
-//for (int i = index; i < counter - 1; i++) {
-        //storage[i] = storage[i + 1];

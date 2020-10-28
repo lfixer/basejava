@@ -10,12 +10,10 @@ public class ArrayStorage extends AbstractArrayStorage {
 
     protected void innerSave(Resume resume, int index) {
         storage[counter] = resume;
-        counter++;
     }
 
     protected void innerDelete(int index) {
         storage[index] = storage[counter - 1];
-        storage[counter - 1] = null;
     }
 
     protected int getIndex(String uuid) {

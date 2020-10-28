@@ -30,7 +30,7 @@ public class Resume implements Comparable<Resume> {
 
     @Override
     public int compareTo(Resume o) {
-        return Integer.parseInt(uuid.substring(4)) - Integer.parseInt(o.uuid.substring(4));
+        return uuid.compareTo(o.uuid);
     }
 
     @Override

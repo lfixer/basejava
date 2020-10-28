@@ -7,25 +7,13 @@ import java.util.Arrays;
 public class SortedArrayStorage extends AbstractArrayStorage {
 
     protected void innerSave(Resume resume, int index) {
-        if (counter == 0) {
-            storage[0] = resume;
-            counter++;
-        } else if (-index - 1 == counter) {
-            storage[-index - 1] = resume;
-            counter++;
-        } else if (counter > 0 && index < 0 && (-index - 1) != counter) {
-            for (int i = counter - 1; i > -index - 2; i--) {
-                storage[i + 1] = storage[i];
-            }
-            storage[-index - 1] = resume;
-            counter++;
-        }
+        int newIndex = -index - 1;
+        System.arraycopy(storage, newIndex + 1 - 1, storage, newIndex + 1, counter - newIndex);
+        storage[-index - 1] = resume;
     }
 
     protected void innerDelete(int index) {
-        for (int i = index; i < counter - 1; i++) {
-            storage[i] = storage[i + 1];
-        }
+        if (counter - 1 - index >= 0) System.arraycopy(storage, index + 1, storage, index, counter - 1 - index);
     }
 
     protected int getIndex(String uuid) {
