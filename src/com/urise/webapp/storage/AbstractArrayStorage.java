@@ -1,5 +1,8 @@
 package com.urise.webapp.storage;
 
+import com.urise.webapp.exeption.ExistStorageException;
+import com.urise.webapp.exeption.NotExistStorageException;
+import com.urise.webapp.exeption.StorageException;
 import com.urise.webapp.model.Resume;
 
 import java.util.Arrays;
@@ -22,7 +25,7 @@ public abstract class AbstractArrayStorage implements Storage {
     public void update(Resume resume) {
         int index = getIndex(resume.getUuid());
         if (index == -1) {
-            System.out.println("resume " + resume.getUuid() + " is not found");
+            throw new NotExistStorageException(resume.getUuid());
         } else {
             storage[index] = resume;
             System.out.println("resume " + resume.getUuid() + " is updated");
@@ -32,8 +35,7 @@ public abstract class AbstractArrayStorage implements Storage {
     public Resume get(String uuid) {
         int index = getIndex(uuid);
         if (index == -1) {
-            System.out.println("resume " + uuid + " is not found");
-            return null;
+            throw new NotExistStorageException(uuid);
         }
         return storage[index];
     }
@@ -47,19 +49,19 @@ public abstract class AbstractArrayStorage implements Storage {
     public void save(Resume resume) {
         int index = getIndex(resume.getUuid());
         if (counter == storage.length) {
-            System.out.println("storage is full");
+            throw new StorageException("Storage overflow", resume.getUuid());
         } else if (index < 0) {
             innerSave(resume, index);
             counter++;
         } else {
-            System.out.println("resume " + resume.getUuid() + " is already exist");
+            throw new ExistStorageException(resume.getUuid());
         }
     }
 
     public void delete(String uuid) {
         int index = getIndex(uuid);
         if (index < 0) {
-            System.out.println("resume " + uuid + " is not found");
+            throw new NotExistStorageException(uuid);
         } else {
             innerDelete(index);
             storage[counter - 1] = null;
