@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.internal.RealSystem;
 
+import static com.urise.webapp.storage.AbstractArrayStorage.STORAGE_LIMIT;
 import static org.junit.Assert.*;
 
 public abstract class AbstractArrayStorageTest {
@@ -74,9 +75,10 @@ public abstract class AbstractArrayStorageTest {
 
     @Test
     public void save() {
-        storage.save(new Resume(UUID_4));
+        Resume resume = new Resume(UUID_4);
+        storage.save(resume);
         Assert.assertEquals(4, storage.size());
-        Assert.assertEquals(new Resume(UUID_4), storage.get(UUID_4));
+        Assert.assertEquals(resume, storage.get(UUID_4));
     }
 
     @Test(expected = ExistStorageException.class)
@@ -84,10 +86,11 @@ public abstract class AbstractArrayStorageTest {
         storage.save(new Resume(UUID_3));
     }
 
-    @Test
+    @Test(expected = NotExistStorageException.class)
     public void delete() throws Exception {
         storage.delete(UUID_2);
         Assert.assertEquals(2, storage.size());
+        storage.get(UUID_2);
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -95,12 +98,15 @@ public abstract class AbstractArrayStorageTest {
         storage.delete("dummy");
     }
 
-    @Test
+    @Test(expected = StorageException.class)
     public void storageOverflow() throws Exception {
         try {
-            storage.save(new Resume(UUID_4));
+            for (int i = storage.size() + 1; i <= STORAGE_LIMIT; i++) {
+                storage.save(new Resume());
+            }
         } catch (StorageException e) {
             Assert.fail("Overflow is not expected");
         }
+        storage.save(new Resume());
     }
 }
