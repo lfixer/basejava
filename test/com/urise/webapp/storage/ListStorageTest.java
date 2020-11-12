@@ -2,15 +2,11 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.exeption.ExistStorageException;
 import com.urise.webapp.exeption.NotExistStorageException;
-import com.urise.webapp.exeption.StorageException;
 import com.urise.webapp.model.Resume;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-
-import static com.urise.webapp.storage.AbstractArrayStorage.STORAGE_LIMIT;
 
 public class ListStorageTest {
     private Storage storage = new ListStorage();

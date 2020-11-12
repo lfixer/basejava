@@ -20,6 +20,11 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
+    protected Resume innerGet(int index) {
+        return null;
+    }
+
+    @Override
     public void delete(String uuid) {
 
     }
@@ -37,5 +42,30 @@ public class MapStorage extends AbstractStorage {
     @Override
     public void update(Resume resume) {
 
+    }
+
+    @Override
+    protected int getIndex(String uuid) {
+        return 0;
+    }
+
+    @Override
+    protected void innerUpdate(int index, Resume resume) {
+
+    }
+
+    @Override
+    protected void innerDelete(int index) {
+
+    }
+
+    @Override
+    protected void innerSave(Resume resume, int index) {
+
+    }
+
+    @Override
+    protected boolean isNotEnoughMemory() {
+        return false;
     }
 }

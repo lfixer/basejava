@@ -11,11 +11,13 @@ public class ArrayStorage extends AbstractArrayStorage {
     @Override
     protected void innerSave(Resume resume, int index) {
         storage[counter] = resume;
+        counter++;
     }
 
     @Override
     protected void innerDelete(int index) {
         storage[index] = storage[counter - 1];
+        storage[counter-- - 1] = null;
     }
 
     @Override
@@ -26,5 +28,10 @@ public class ArrayStorage extends AbstractArrayStorage {
             }
         }
         return -1;
+    }
+
+    @Override
+    protected void innerUpdate(int index, Resume resume) {
+        storage[index] = resume;
     }
 }
