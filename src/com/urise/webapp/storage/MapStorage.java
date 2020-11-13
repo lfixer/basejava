@@ -60,12 +60,7 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    protected void innerSave(Resume resume, int index) {
-
-    }
-
-    @Override
-    protected boolean isNotEnoughMemory() {
-        return false;
+    protected boolean innerSave(Resume resume, int index) {
+        return true;
     }
 }

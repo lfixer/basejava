@@ -29,11 +29,13 @@ public abstract class AbstractStorage implements Storage {
 
     public void save(Resume resume) {
         int index = getIndex(resume.getUuid());
-        if (isNotEnoughMemory()) {
-            throw new StorageException("Storage overflow", resume.getUuid());
-        } else if (index < 0) {
-            innerSave(resume, index);
-            System.out.println("Resume " + resume.getUuid() + " is saved");
+        if (index < 0) {
+            if (innerSave(resume, index)) {
+                System.out.println("Resume " + resume.getUuid() + " is saved");
+            }
+            else {
+                throw new StorageException("Storage overflow", resume.getUuid());
+            }
         } else {
             throw new ExistStorageException(resume.getUuid());
         }
@@ -55,8 +57,6 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract void innerDelete(int index);
 
-    protected abstract void innerSave(Resume resume, int index);
-
-    protected abstract boolean isNotEnoughMemory();
+    protected abstract boolean innerSave(Resume resume, int index);
 
 }

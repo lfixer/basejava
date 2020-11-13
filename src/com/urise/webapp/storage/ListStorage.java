@@ -5,7 +5,7 @@ import com.urise.webapp.model.Resume;
 import java.util.ArrayList;
 
 public class ListStorage extends AbstractStorage {
-    ArrayList<Resume> storage = new ArrayList<>();
+    private ArrayList<Resume> storage = new ArrayList<>();
 
     @Override
     public void clear() {
@@ -19,8 +19,7 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     public Resume[] getAll() {
-        Resume[] resumes = storage.toArray(Resume[]::new);
-        return resumes;
+        return storage.toArray(Resume[]::new);
     }
 
     @Override
@@ -45,13 +44,9 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected void innerSave(Resume resume, int index) {
+    protected boolean innerSave(Resume resume, int index) {
         storage.add(resume);
-    }
-
-    @Override
-    protected boolean isNotEnoughMemory() {
-        return false;
+        return true;
     }
 
 }

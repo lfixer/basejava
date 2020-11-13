@@ -1,5 +1,7 @@
 package com.urise.webapp.storage;
 
+import com.urise.webapp.exeption.ExistStorageException;
+import com.urise.webapp.exeption.StorageException;
 import com.urise.webapp.model.Resume;
 
 import java.util.Arrays;
@@ -29,12 +31,27 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean isNotEnoughMemory() {
-        return (counter == STORAGE_LIMIT);
+    protected boolean innerSave(Resume resume, int index) {
+        if (counter == STORAGE_LIMIT) {
+            return false;
+        }
+        innerArraySave(resume, index);
+        counter++;
+        return true;
+    }
+
+    @Override
+    protected void innerDelete(int index) {
+        innerArrayDelete(index);
+        storage[counter-- - 1] = null;
     }
 
     @Override
     protected Resume innerGet(int index) {
         return storage[index];
     }
+
+    protected abstract void innerArraySave(Resume resume, int index);
+
+    protected abstract void innerArrayDelete(int index);
 }
