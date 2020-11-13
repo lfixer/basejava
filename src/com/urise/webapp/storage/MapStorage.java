@@ -60,7 +60,6 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean innerSave(Resume resume, int index) {
-        return true;
+    protected void innerSave(Resume resume, int index) {
     }
 }

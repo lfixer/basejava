@@ -1,6 +1,5 @@
 package com.urise.webapp.storage;
 
-import com.urise.webapp.exeption.ExistStorageException;
 import com.urise.webapp.exeption.StorageException;
 import com.urise.webapp.model.Resume;
 
@@ -31,13 +30,12 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean innerSave(Resume resume, int index) {
+    protected void innerSave(Resume resume, int index) {
         if (counter == STORAGE_LIMIT) {
-            return false;
+            throw new StorageException("Storage overflow", resume.getUuid());
         }
         innerArraySave(resume, index);
         counter++;
-        return true;
     }
 
     @Override
@@ -49,6 +47,11 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     @Override
     protected Resume innerGet(int index) {
         return storage[index];
+    }
+
+    @Override
+    protected void innerUpdate(int index, Resume resume) {
+        storage[index] = resume;
     }
 
     protected abstract void innerArraySave(Resume resume, int index);

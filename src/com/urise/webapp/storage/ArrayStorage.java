@@ -28,8 +28,4 @@ public class ArrayStorage extends AbstractArrayStorage {
         return -1;
     }
 
-    @Override
-    protected void innerUpdate(int index, Resume resume) {
-        storage[index] = resume;
-    }
 }

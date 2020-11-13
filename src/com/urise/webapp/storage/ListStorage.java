@@ -44,9 +44,8 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean innerSave(Resume resume, int index) {
+    protected void innerSave(Resume resume, int index) {
         storage.add(resume);
-        return true;
     }
 
 }
