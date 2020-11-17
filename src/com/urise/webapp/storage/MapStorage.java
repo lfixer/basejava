@@ -2,64 +2,53 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
+
 public class MapStorage extends AbstractStorage {
+    Map<String, Resume> storage = new TreeMap<>();
 
     @Override
     public void clear() {
-
+        storage.clear();
     }
 
     @Override
-    public void save(Resume resume) {
-
+    protected Resume innerGet(Object key) {
+        return storage.get(key);
     }
 
     @Override
-    public Resume get(String uuid) {
-        return null;
-    }
-
-    @Override
-    protected Resume innerGet(int index) {
-        return null;
-    }
-
-    @Override
-    public void delete(String uuid) {
-
+    protected Object getKey(String uuid) {
+        if (storage.containsKey(uuid))
+            return uuid;
+        return "";
     }
 
     @Override
     public Resume[] getAll() {
-        return new Resume[0];
+        return storage.values().toArray(new Resume[0]);
     }
 
     @Override
     public int size() {
-        return 0;
+        return storage.size();
+    }
+
+
+    @Override
+    protected void innerUpdate(Object key, Resume resume) {
+        storage.replace(resume.getUuid(), resume);
     }
 
     @Override
-    public void update(Resume resume) {
-
+    protected void innerDelete(Object key) {
+        storage.remove((String) key);
     }
 
     @Override
-    protected int getIndex(String uuid) {
-        return 0;
-    }
-
-    @Override
-    protected void innerUpdate(int index, Resume resume) {
-
-    }
-
-    @Override
-    protected void innerDelete(int index) {
-
-    }
-
-    @Override
-    protected void innerSave(Resume resume, int index) {
+    protected void innerSave(Object key, Resume resume) {
+        storage.put(resume.getUuid(), resume);
     }
 }
