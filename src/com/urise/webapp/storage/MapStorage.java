@@ -2,7 +2,6 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -44,7 +43,7 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected void innerDelete(Object key) {
-        storage.remove((String) key);
+        storage.remove(key);
     }
 
     @Override
