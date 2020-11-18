@@ -27,6 +27,7 @@ public class ListStorage extends AbstractStorage {
         return storage.get((Integer) key);
     }
 
+
     @Override
     protected Object getKey(String uuid) {
         Resume resume = new Resume(uuid);

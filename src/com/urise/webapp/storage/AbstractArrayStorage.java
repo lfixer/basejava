@@ -54,6 +54,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         storage[(Integer) key] = resume;
     }
 
+
     protected abstract void innerArraySave(Resume resume, int index);
 
     protected abstract void innerArrayDelete(int index);

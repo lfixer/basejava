@@ -32,13 +32,19 @@ public abstract class AbstractStorage implements Storage {
 
     protected Object checkKey(String uuid) {
         Object key = getKey(uuid);
-        if ((key instanceof Integer && (Integer) key < 0) || key instanceof String && key.equals("")) {
+        if (isNotExist(key)) {
             throw new NotExistStorageException(uuid);
         }
         return key;
     }
 
     protected abstract Resume innerGet(Object key);
+
+    protected boolean isNotExist(Object key) {
+        if ((Integer) key < 0)
+            return true;
+        return false;
+    }
 
     protected abstract Object getKey(String uuid);
 
