@@ -50,4 +50,9 @@ public class ListStorage extends AbstractStorage {
         storage.add(resume);
     }
 
+    @Override
+    protected boolean isNotExist(Object key) {
+        return (Integer) key == -1;
+    }
+
 }

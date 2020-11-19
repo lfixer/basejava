@@ -13,7 +13,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     @Override
     public void clear() {
-        Arrays.fill(storage, 0, counter - 1 + 1, null);
+        Arrays.fill(storage, 0, counter, null);
         counter = 0;
     }
 
@@ -54,6 +54,9 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         storage[(Integer) key] = resume;
     }
 
+    protected boolean isNotExist(Object key) {
+        return (Integer) key < 0;
+    }
 
     protected abstract void innerArraySave(Resume resume, int index);
 

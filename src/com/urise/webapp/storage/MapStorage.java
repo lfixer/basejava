@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class MapStorage extends AbstractStorage {
-    Map<String, Resume> storage = new TreeMap<>();
+    private Map<String, Resume> storage = new TreeMap<>();
 
     @Override
     public void clear() {
@@ -20,16 +20,15 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected boolean isNotExist(Object key) {
-        if (key.equals(""))
-            return true;
-        return false;
+        if (key == null) return true;
+        return (!storage.containsKey(key));
     }
 
     @Override
     protected Object getKey(String uuid) {
         if (storage.containsKey(uuid))
             return uuid;
-        return "";
+        return null;
     }
 
     @Override
@@ -41,7 +40,6 @@ public class MapStorage extends AbstractStorage {
     public int size() {
         return storage.size();
     }
-
 
     @Override
     protected void innerUpdate(Object key, Resume resume) {

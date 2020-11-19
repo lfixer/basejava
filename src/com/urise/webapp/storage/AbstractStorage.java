@@ -18,7 +18,7 @@ public abstract class AbstractStorage implements Storage {
 
     public void save(Resume resume) {
         Object key = getKey(resume.getUuid());
-        if ((key instanceof Integer && (Integer) key < 0) || key instanceof String && key.equals("")) {
+        if (isNotExist(key)) {
             innerSave(key, resume);
             System.out.println("Resume " + resume.getUuid() + " is saved");
         } else {
@@ -30,7 +30,7 @@ public abstract class AbstractStorage implements Storage {
         return innerGet(checkKey(uuid));
     }
 
-    protected Object checkKey(String uuid) {
+    private Object checkKey(String uuid) {
         Object key = getKey(uuid);
         if (isNotExist(key)) {
             throw new NotExistStorageException(uuid);
@@ -40,11 +40,7 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract Resume innerGet(Object key);
 
-    protected boolean isNotExist(Object key) {
-        if ((Integer) key < 0)
-            return true;
-        return false;
-    }
+    protected abstract boolean isNotExist(Object key);
 
     protected abstract Object getKey(String uuid);
 
