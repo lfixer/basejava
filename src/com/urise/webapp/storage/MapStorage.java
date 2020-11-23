@@ -1,12 +1,10 @@
 package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
-
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class MapStorage extends AbstractStorage {
-    private Map<String, Resume> storage = new TreeMap<>();
+    private Map<String, Resume> storage = new HashMap<>();
 
     @Override
     public void clear() {
@@ -32,11 +30,6 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    public Resume[] getAll() {
-        return storage.values().toArray(new Resume[0]);
-    }
-
-    @Override
     public int size() {
         return storage.size();
     }
@@ -54,5 +47,10 @@ public class MapStorage extends AbstractStorage {
     @Override
     protected void innerSave(Object key, Resume resume) {
         storage.put(resume.getUuid(), resume);
+    }
+
+    public List<Resume> getList() {
+        ArrayList<Resume> list = new ArrayList(storage.values());
+        return list;
     }
 }

@@ -3,6 +3,7 @@ package com.urise.webapp.storage;
 import com.urise.webapp.model.Resume;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ListStorage extends AbstractStorage {
     private ArrayList<Resume> storage = new ArrayList<>();
@@ -18,8 +19,8 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public Resume[] getAll() {
-        return storage.toArray(Resume[]::new);
+    public List<Resume> getList() {
+        return storage;
     }
 
     @Override
@@ -27,11 +28,15 @@ public class ListStorage extends AbstractStorage {
         return storage.get((Integer) key);
     }
 
-
     @Override
     protected Object getKey(String uuid) {
-        Resume resume = new Resume(uuid);
-        return storage.indexOf(resume);
+        int index = -1;
+        for (Resume r : storage) {
+            index++;
+            if (r.getUuid().equals(uuid))
+                return index;
+        }
+        return -1;
     }
 
     @Override
