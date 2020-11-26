@@ -1,6 +1,7 @@
 package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
+
 import java.util.*;
 
 public class MapStorage extends AbstractStorage {
@@ -18,15 +19,12 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected boolean isNotExist(Object key) {
-        if (key == null) return true;
-        return (!storage.containsKey(key));
+        return ((key == null) || getKey((String) key) == null) ? true : false;
     }
 
     @Override
     protected Object getKey(String uuid) {
-        if (storage.containsKey(uuid))
-            return uuid;
-        return null;
+        return storage.containsKey(uuid) ? uuid : null;
     }
 
     @Override
@@ -50,7 +48,6 @@ public class MapStorage extends AbstractStorage {
     }
 
     public List<Resume> getList() {
-        ArrayList<Resume> list = new ArrayList(storage.values());
-        return list;
+        return new ArrayList(storage.values());
     }
 }
