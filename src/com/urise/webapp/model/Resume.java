@@ -1,7 +1,6 @@
 package com.urise.webapp.model;
 
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Initial resume class
@@ -9,6 +8,9 @@ import java.util.UUID;
 public class Resume implements Comparable<Resume> {
     private final String uuid;
     private final String fullName;
+
+    private final Map<SectionType, DataType> sectionData = new EnumMap<>(SectionType.class);
+    private final Map<String, String> contacts = new HashMap<>();
 
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);
@@ -19,10 +21,11 @@ public class Resume implements Comparable<Resume> {
         this.fullName = fullName;
     }
 
-
     public String getUuid() {
         return uuid;
     }
+
+    public String getFullName() { return fullName; }
 
     @Override
     public boolean equals(Object o) {
@@ -48,4 +51,41 @@ public class Resume implements Comparable<Resume> {
     public String toString() {
         return uuid + ", " + fullName;
     }
+
+    public String getContact(String contact) {
+        return contacts.get(contact);
+    }
+
+    public DataType getData(SectionType type) {
+        return sectionData.get(type);
+    }
+
+    public String getContacts() {
+        StringBuilder result = new StringBuilder();
+        for (String key : contacts.keySet()) {
+            result.append(key).append(" : ").append(contacts.get(key)).append("\n");
+        }
+        return result.toString();
+    }
+
+    public String getAllData() {
+        StringBuilder result = new StringBuilder();
+        for (SectionType key : sectionData.keySet()) {
+            result.append(key.toString()).append(" : ").append(sectionData.get(key).toString()).append("\n\n");
+        }
+        return result + "\n";
+    }
+
+    public void setContact(String contactName, String data) {
+        contacts.put(contactName, data);
+    }
+
+    public void setData(SectionType section, String data) {
+        sectionData.put(section, new TextData(data));
+    }
+
+    public void setData(SectionType section, ArrayList<String> data) {
+        sectionData.put(section, new ListData(data));
+    }
+
 }

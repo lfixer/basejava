@@ -34,7 +34,7 @@ public abstract class AbstractStorageTest {
     }
 
     @Before
-    public void setup() throws Exception {
+    public void setup() {
         storage.clear();
         storage.save(RESUME_1);
         storage.save(RESUME_2);
@@ -60,7 +60,7 @@ public abstract class AbstractStorageTest {
     }
 
     @Test(expected = NotExistStorageException.class)
-    public void updateNotExist() throws Exception {
+    public void updateNotExist() {
         storage.update(RESUME_4);
     }
 
@@ -70,7 +70,7 @@ public abstract class AbstractStorageTest {
     }
 
     @Test(expected = NotExistStorageException.class)
-    public void getNotExist() throws Exception {
+    public void getNotExist() {
         storage.get(UUID_4);
     }
 
@@ -93,19 +93,18 @@ public abstract class AbstractStorageTest {
 
     @Test(expected = ExistStorageException.class)
     public void saveExist() {
-        storage.save(RESUME_4);
-        storage.save(RESUME_4);
+        storage.save(RESUME_3);
     }
 
     @Test(expected = NotExistStorageException.class)
-    public void delete() throws Exception {
+    public void delete() {
         storage.delete(UUID_2);
         Assert.assertEquals(2, storage.size());
         storage.get(UUID_2);
     }
 
     @Test(expected = NotExistStorageException.class)
-    public void deleteNotExist() throws Exception {
+    public void deleteNotExist() {
         storage.delete(UUID_4);
     }
 }

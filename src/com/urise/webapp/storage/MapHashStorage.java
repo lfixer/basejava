@@ -7,8 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MapHashStorage extends AbstractStorage {
-    private Map<Integer, Resume> storage = new HashMap<>();
+public class MapHashStorage extends AbstractStorage<Integer> {
+    private final Map<Integer, Resume> storage = new HashMap<>();
 
     @Override
     public void clear() {
@@ -16,17 +16,17 @@ public class MapHashStorage extends AbstractStorage {
     }
 
     @Override
-    protected Resume innerGet(Object key) {
+    protected Resume innerGet(Integer key) {
         return storage.get(key);
     }
 
     @Override
-    protected boolean isNotExist(Object key) {
-        return (key == null) ? true : false;
+    protected boolean isNotExist(Integer key) {
+        return key == null;
     }
 
     @Override
-    protected Object getKey(String uuid) {
+    protected Integer getKey(String uuid) {
         return storage.containsKey(uuid.hashCode()) ? uuid.hashCode() : null;
     }
 
@@ -36,21 +36,21 @@ public class MapHashStorage extends AbstractStorage {
     }
 
     @Override
-    protected void innerUpdate(Object key, Resume resume) {
-        storage.replace((Integer) key, resume);
+    protected void innerUpdate(Integer key, Resume resume) {
+        storage.replace(key, resume);
     }
 
     @Override
-    protected void innerDelete(Object key) {
+    protected void innerDelete(Integer key) {
         storage.remove(key);
     }
 
     @Override
-    protected void innerSave(Object key, Resume resume) {
+    protected void innerSave(Integer key, Resume resume) {
         storage.put(resume.getUuid().hashCode(), resume);
     }
 
     public List<Resume> getList() {
-        return new ArrayList(storage.values());
+        return new ArrayList<>(storage.values());
     }
 }
