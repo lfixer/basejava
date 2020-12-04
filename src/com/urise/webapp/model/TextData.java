@@ -1,7 +1,7 @@
 package com.urise.webapp.model;
 
 public class TextData extends DataType {
-    private String text;
+    private final String text;
 
     public TextData(String text) {
         this.text = text;

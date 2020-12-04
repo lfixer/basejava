@@ -1,7 +1,6 @@
 package com.urise.webapp;
 
-import com.urise.webapp.model.Resume;
-import com.urise.webapp.model.SectionType;
+import com.urise.webapp.model.*;
 
 import java.util.ArrayList;
 
@@ -32,17 +31,14 @@ public class ResumeTestData {
         qualification.add("Технологии: Servlet, JSP/JSTL, JAX-WS, REST, EJB, RMI, JMS, JavaMail, JAXB, StAX, SAX, DOM, XSLT, MDB, JMX, JDBC, JPA, JNDI, JAAS, SOAP, AJAX, Commet, HTML5, ESB, CMIS, BPMN2, LDAP, OAuth1, OAuth2, JWT.");
         resume.setData(SectionType.QUALIFICATIONS, qualification);
 
-        ArrayList<String> experience = new ArrayList<>();
-        experience.add("Java Online Projects\n" +
-                "10/2013 - Сейчас\tАвтор проекта.\n" +
-                "Создание, организация и проведение Java онлайн проектов и стажировок.");
-        experience.add("Wrike\n" +
-                "10/2014 - 01/2016\tСтарший разработчик (backend)\n" +
-                "Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.");
-        experience.add("RIT Center\n" +
-                "04/2012 - 10/2014\tJava архитектор\n" +
-                "Организация процесса разработки системы ERP для разных окружений: релизная политика, версионирование, ведение CI (Jenkins), миграция базы (кастомизация Flyway), конфигурирование системы (pgBoucer, Nginx), AAA via SSO. Архитектура БД и серверной части системы. Разработка интергационных сервисов: CMIS, BPMN2, 1C (WebServices), сервисов общего назначения (почта, экспорт в pdf, doc, html). Интеграция Alfresco JLAN для online редактирование из браузера документов MS Office. Maven + plugin development, Ant, Apache Commons, Spring security, Spring MVC, Tomcat,WSO2, xcmis, OpenCmis, Bonita, Python scripting, Unix shell remote scripting via ssh tunnels, PL/Python");
+        ArrayList<Place> experience = new ArrayList<>();
+        experience.add(new WorkPlace("Java Online Projects", "Автор проекта.", "10.2013", "12.2020", "Создание, организация и проведение Java онлайн проектов и стажировок."));
         resume.setData(SectionType.EXPERIENCE, experience);
+
+        ArrayList<Place> education = new ArrayList<>();
+        education.add(new EducationPlace("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики", "09.1993", "07.1996", "Аспирантура (программист С, С++)"));
+        education.add(new EducationPlace("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики", "09.1987", "07.1993", "Инженер (программист Fortran, C)"));
+        resume.setData(SectionType.EDUCATION, education);
 
         System.out.println("Имя: " + resume.getFullName() + "\nid: " + resume.getUuid());
         System.out.println(resume.getContacts());

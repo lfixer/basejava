@@ -84,8 +84,8 @@ public class Resume implements Comparable<Resume> {
         sectionData.put(section, new TextData(data));
     }
 
-    public void setData(SectionType section, ArrayList<String> data) {
-        sectionData.put(section, new ListData(data));
+    public <T> void setData(SectionType section, ArrayList<T> data) {
+        sectionData.put(section, new ListData<>(data));
     }
 
 }
