@@ -2,6 +2,7 @@ package com.urise.webapp;
 
 import com.urise.webapp.model.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ResumeTestData {
@@ -9,11 +10,11 @@ public class ResumeTestData {
     public static void main(String[] args) {
         Resume resume = new Resume("Григорий Кислин");
 
-        resume.setContact("Phone", "+7(921) 855-0482");
-        resume.setContact("Skype", "grigory.kislin");
-        resume.setContact("Mail", "gkislin@yandex.ru");
-        resume.setContact("LinkedIn", "https://www.linkedin.com/in/gkislin");
-        resume.setContact("GitHub", "https://github.com/gkislin");
+        resume.setContact(ContactType.PHONE, "+7(921) 855-0482");
+        resume.setContact(ContactType.SKYPE, "grigory.kislin");
+        resume.setContact(ContactType.MAIL, "gkislin@yandex.ru");
+        resume.setContact(ContactType.LINKEDIN, "https://www.linkedin.com/in/gkislin");
+        resume.setContact(ContactType.GITHUB, "https://github.com/gkislin");
 
         resume.setData(SectionType.PERSONAL, "Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры.");
         resume.setData(SectionType.OBJECTIVE, "Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям");
@@ -31,14 +32,14 @@ public class ResumeTestData {
         qualification.add("Технологии: Servlet, JSP/JSTL, JAX-WS, REST, EJB, RMI, JMS, JavaMail, JAXB, StAX, SAX, DOM, XSLT, MDB, JMX, JDBC, JPA, JNDI, JAAS, SOAP, AJAX, Commet, HTML5, ESB, CMIS, BPMN2, LDAP, OAuth1, OAuth2, JWT.");
         resume.setData(SectionType.QUALIFICATIONS, qualification);
 
-        ArrayList<Place> experience = new ArrayList<>();
-        experience.add(new WorkPlace("Java Online Projects", "Автор проекта.", "10.2013", "12.2020", "Создание, организация и проведение Java онлайн проектов и стажировок."));
-        resume.setData(SectionType.EXPERIENCE, experience);
+        ArrayList<Organization> experience = new ArrayList<>();
+        experience.add(new Organization("Java Online Projects", "Автор проекта.", LocalDate.of(2013, 10, 1), LocalDate.now(), "Создание, организация и проведение Java онлайн проектов и стажировок."));
+        resume.setExperience(SectionType.EXPERIENCE, experience);
 
-        ArrayList<Place> education = new ArrayList<>();
-        education.add(new EducationPlace("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики", "09.1993", "07.1996", "Аспирантура (программист С, С++)"));
-        education.add(new EducationPlace("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики", "09.1987", "07.1993", "Инженер (программист Fortran, C)"));
-        resume.setData(SectionType.EDUCATION, education);
+        ArrayList<Organization> education = new ArrayList<>();
+        education.add(new Organization("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики", "" , LocalDate.of(1993, 9, 1), LocalDate.of(1976, 7, 1), "Аспирантура (программист С, С++)"));
+        education.add(new Organization("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики", "", LocalDate.of(1987, 9, 1), LocalDate.of(1993, 7, 1), "Инженер (программист Fortran, C)"));
+        resume.setExperience(SectionType.EDUCATION, education);
 
         System.out.println("Имя: " + resume.getFullName() + "\nid: " + resume.getUuid());
         System.out.println(resume.getContacts());

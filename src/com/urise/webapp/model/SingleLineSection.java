@@ -1,9 +1,9 @@
 package com.urise.webapp.model;
 
-public class TextData extends DataType {
+public class SingleLineSection extends AbstractSection {
     private final String text;
 
-    public TextData(String text) {
+    public SingleLineSection(String text) {
         this.text = text;
     }
 
