@@ -2,12 +2,14 @@ package com.urise.webapp;
 
 import com.urise.webapp.model.*;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ResumeTestData {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws MalformedURLException {
         Resume resume = new Resume("Григорий Кислин");
 
         resume.setContact(ContactType.PHONE, "+7(921) 855-0482");
@@ -32,17 +34,15 @@ public class ResumeTestData {
         qualification.add("Технологии: Servlet, JSP/JSTL, JAX-WS, REST, EJB, RMI, JMS, JavaMail, JAXB, StAX, SAX, DOM, XSLT, MDB, JMX, JDBC, JPA, JNDI, JAAS, SOAP, AJAX, Commet, HTML5, ESB, CMIS, BPMN2, LDAP, OAuth1, OAuth2, JWT.");
         resume.setData(SectionType.QUALIFICATIONS, qualification);
 
-        ArrayList<Organization> experience = new ArrayList<>();
-        experience.add(new Organization("Java Online Projects", "Автор проекта.", LocalDate.of(2013, 10, 1), LocalDate.now(), "Создание, организация и проведение Java онлайн проектов и стажировок."));
-        resume.setExperience(SectionType.EXPERIENCE, experience);
+        ArrayList<Experience> experience = new ArrayList<>();
+        experience.add(new Experience("Java Online Projects", new URL("https://javaops.ru/"), "Автор проекта.", LocalDate.of(2013, 10, 1), LocalDate.now(), "Создание, организация и проведение Java онлайн проектов и стажировок."));
+        resume.setData(SectionType.EXPERIENCE, experience);
 
-        ArrayList<Organization> education = new ArrayList<>();
-        education.add(new Organization("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики", "" , LocalDate.of(1993, 9, 1), LocalDate.of(1976, 7, 1), "Аспирантура (программист С, С++)"));
-        education.add(new Organization("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики", "", LocalDate.of(1987, 9, 1), LocalDate.of(1993, 7, 1), "Инженер (программист Fortran, C)"));
-        resume.setExperience(SectionType.EDUCATION, education);
+        ArrayList<Experience> education = new ArrayList<>();
+        education.add(new Experience("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики", new URL("https://itmo.ru/ru/"), "", LocalDate.of(1993, 9, 1), LocalDate.of(1976, 7, 1), "Аспирантура (программист С, С++)"));
+        education.add(new Experience("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики", new URL("https://itmo.ru/ru/"), "", LocalDate.of(1987, 9, 1), LocalDate.of(1993, 7, 1), "Инженер (программист Fortran, C)"));
+        resume.setData(SectionType.EDUCATION, education);
 
-        System.out.println("Имя: " + resume.getFullName() + "\nid: " + resume.getUuid());
-        System.out.println(resume.getContacts());
-        System.out.println(resume.getAllData());
+        System.out.println(resume);
     }
 }

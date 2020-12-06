@@ -1,20 +1,27 @@
 package com.urise.webapp.model;
 
-import java.util.List;
+import java.net.URL;
+import java.time.LocalDate;
 
-public class Experience extends AbstractSection {
-    private final List<Organization> organizations;
+public class Experience {
+    private final String name;
+    private final URL url;
+    private final LocalDate startDate;
+    private final LocalDate endDate;
+    private final String position;
+    private final String info;
 
-    public Experience(List<Organization> organizations) {
-        this.organizations = organizations;
+    public Experience(String name, URL url, String position, LocalDate startDate, LocalDate endDate, String info) {
+        this.name = name;
+        this.url = url;
+        this.position = position;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.info = info;
     }
 
     @Override
     public String toString() {
-        StringBuilder result = new StringBuilder();
-        for (Organization organization : organizations) {
-            result.append(organization.toString()).append("\n");
-        }
-        return result.toString();
+        return  "\n" + name + "\n" + url + "\n" + startDate.getYear() + "." + startDate.getMonth() + " - " + endDate.getYear() + "." + endDate.getMonth() + "   " + position + "\n" + info;
     }
 }
