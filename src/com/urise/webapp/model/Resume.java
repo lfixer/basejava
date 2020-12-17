@@ -33,16 +33,9 @@ public class Resume implements Comparable<Resume> {
         contacts.put(contact, data);
     }
 
-    public void setData(SectionType section, String data) {
-        sections.put(section, new SingleLineSection(data));
-    }
 
-    public <T> void setData(SectionType section, ArrayList<T> data) {
-        if (data.get(0) instanceof String) {
-            sections.put(section, new BulletedLineSection((ArrayList<String>) data));
-        } else {
-            sections.put(section, new Organisation((List<Experience>) data));
-        }
+    public void setSection(SectionType section, AbstractSection data) {
+        sections.put(section, data);
     }
 
     @Override
@@ -50,15 +43,15 @@ public class Resume implements Comparable<Resume> {
         if (this == o) return true;
         if (!(o instanceof Resume)) return false;
         Resume resume = (Resume) o;
-        return Objects.equals(getUuid(), resume.getUuid()) &&
-                Objects.equals(getFullName(), resume.getFullName()) &&
+        return Objects.equals(uuid, resume.getUuid()) &&
+                Objects.equals(fullName, resume.getFullName()) &&
                 Objects.equals(sections, resume.sections) &&
                 Objects.equals(contacts, resume.contacts);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUuid(), getFullName(), sections, contacts);
+        return Objects.hash(uuid, fullName, sections, contacts);
     }
 
     @Override
