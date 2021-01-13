@@ -13,7 +13,7 @@ public abstract class AbstractStorage<SK> implements Storage {
     private static final Logger LOG = Logger.getLogger(AbstractStorage.class.getName());
 
     public void update(Resume resume) {
-        LOG.info("Update " + resume);
+        LOG.info("Update " + resume.getUuid());
         innerUpdate(checkKey(resume.getUuid()), resume);
         System.out.println("Resume " + resume.getUuid() + " is updated");
     }
@@ -25,7 +25,7 @@ public abstract class AbstractStorage<SK> implements Storage {
     }
 
     public void save(Resume resume) {
-        LOG.info("Save " + resume);
+        LOG.info("Save " + resume.getUuid());
         SK key = getKey(resume.getUuid());
         if (isNotExist(key)) {
             innerSave(key, resume);

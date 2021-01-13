@@ -9,9 +9,11 @@ import java.util.ArrayList;
 
 public class ResumeTestData {
 
-    public static void main(String[] args) throws MalformedURLException {
-        Resume resume = new Resume("Григорий Кислин");
+    public static void main(String[] args) {
+    }
 
+    public static Resume writeResume(String uuid, String fullName) {
+        Resume resume = new Resume(uuid, fullName);
         resume.setContact(ContactType.PHONE, "+7(921) 855-0482");
         resume.setContact(ContactType.SKYPE, "grigory.kislin");
         resume.setContact(ContactType.MAIL, "gkislin@yandex.ru");
@@ -28,21 +30,27 @@ public class ResumeTestData {
         resume.setSection(SectionType.ACHIEVEMENT, new BulletedLineSection(achievement));
 
         ArrayList<String> qualification = new ArrayList<>();
-        qualification.add("JEE AS: GlassFish (v2.1, v3), OC4J, JBoss, Tomcat, Jetty, WebLogic, WSO2.");
-        qualification.add("Version control: Subversion, Git, Mercury, ClearCase, Perforce.");
         qualification.add("Languages: Java, Scala, Python/Jython/PL-Python, JavaScript, Groovy.");
         qualification.add("Технологии: Servlet, JSP/JSTL, JAX-WS, REST, EJB, RMI, JMS, JavaMail, JAXB, StAX, SAX, DOM, XSLT, MDB, JMX, JDBC, JPA, JNDI, JAAS, SOAP, AJAX, Commet, HTML5, ESB, CMIS, BPMN2, LDAP, OAuth1, OAuth2, JWT.");
         resume.setSection(SectionType.QUALIFICATIONS, new BulletedLineSection(qualification));
 
         ArrayList<Experience> experience = new ArrayList<>();
-        experience.add(new Experience("Java Online Projects", new URL("https://javaops.ru/"), "Автор проекта.", LocalDate.of(2013, 10, 1), LocalDate.now(), "Создание, организация и проведение Java онлайн проектов и стажировок."));
+        try {
+            experience.add(new Experience("Java Online Projects", new URL("https://javaops.ru/"), new Experience.Case("Автор проекта.", LocalDate.of(2013, 10, 1), LocalDate.now(), "Создание, организация и проведение Java онлайн проектов и стажировок.")));
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
         resume.setSection(SectionType.EXPERIENCE, new Organisation(experience));
 
         ArrayList<Experience> education = new ArrayList<>();
-        education.add(new Experience("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики", new URL("https://itmo.ru/ru/"), "", LocalDate.of(1993, 9, 1), LocalDate.of(1976, 7, 1), "Аспирантура (программист С, С++)"));
-        education.add(new Experience("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики", new URL("https://itmo.ru/ru/"), "", LocalDate.of(1987, 9, 1), LocalDate.of(1993, 7, 1), "Инженер (программист Fortran, C)"));
+        try {
+            education.add(new Experience("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики", new URL("https://itmo.ru/ru/"), new Experience.Case("", LocalDate.of(1993, 9, 1), LocalDate.of(1976, 7, 1), "Аспирантура (программист С, С++)"),
+                    new Experience.Case("", LocalDate.of(1987, 9, 1), LocalDate.of(1993, 7, 1), "Инженер (программист Fortran, C)")));
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
         resume.setSection(SectionType.EDUCATION, new Organisation(education));
-
-        System.out.println(resume);
+        return resume;
     }
+
 }
