@@ -8,20 +8,22 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractStorageTest {
+    protected static final File STORAGE_DIR = new File("C:\\Users\\Арина\\Desktop\\BaseJava\\basejava\\src\\com\\urise\\webapp\\file_storage");
     protected Storage storage;
-    private static final String UUID_1 = "uuid1";
-    private static final String UUID_2 = "uuid2";
-    private static final String UUID_3 = "uuid3";
-    private static final String UUID_4 = "uuid4";
+    protected static final String UUID_1 = "uuid1";
+    protected static final String UUID_2 = "uuid2";
+    protected static final String UUID_3 = "uuid3";
+    protected static final String UUID_4 = "uuid4";
 
-    private static final Resume RESUME_1;
-    private static final Resume RESUME_2;
-    private static final Resume RESUME_3;
-    private static final Resume RESUME_4;
+    protected static final Resume RESUME_1;
+    protected static final Resume RESUME_2;
+    protected static final Resume RESUME_3;
+    protected static final Resume RESUME_4;
 
     static {
         RESUME_1 = ResumeTestData.writeResume(UUID_1, "name_1");
@@ -89,7 +91,7 @@ public abstract class AbstractStorageTest {
     public void save() {
         storage.save(RESUME_4);
         Assert.assertEquals(4, storage.size());
-        Assert.assertEquals(RESUME_4, storage.get(UUID_4));
+        Assert.assertEquals(RESUME_4, storage.get(RESUME_4.getUuid()));
     }
 
     @Test(expected = ExistStorageException.class)

@@ -3,6 +3,8 @@ package com.urise.webapp.model;
 import java.util.ArrayList;
 
 public class BulletedLineSection extends AbstractSection {
+    private static final long SerialVersionUID = 1L;
+
     private final ArrayList<String> list;
 
     public BulletedLineSection(ArrayList<String> list) {

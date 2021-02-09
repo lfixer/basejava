@@ -1,9 +1,12 @@
 package com.urise.webapp.model;
 
+import java.io.Serializable;
 import java.net.URL;
 import java.time.LocalDate;
 
-public class Experience {
+public class Experience implements Serializable {
+    private static final long SerialVersionUID = 1L;
+
     private final String name;
     private final URL url;
     private final Case[] cases;
@@ -23,7 +26,7 @@ public class Experience {
         return result.toString();
     }
 
-    public static class Case {
+    public static class Case implements Serializable{
         private final LocalDate startDate;
         private final LocalDate endDate;
         private final String position;

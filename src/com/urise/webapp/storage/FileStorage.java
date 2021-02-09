@@ -3,12 +3,28 @@ package com.urise.webapp.storage;
 import com.urise.webapp.exeption.StorageException;
 import com.urise.webapp.model.Resume;
 
-import java.io.File;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-public abstract class AbstractFileStorage extends AbstractStorage<File> {
-    private File storage;
+public class FileStorage extends AbstractStorage<File> {
+    private final File storage;
+
+    private Strategy strategy;
+
+    protected FileStorage(File storage, StreamStrategy streamStrategy) {
+        Objects.requireNonNull(storage, "directory must not be null");
+
+        this.strategy = streamStrategy;
+        if (!storage.isDirectory()) {
+            throw new IllegalArgumentException(storage.getAbsolutePath() + " is not directory");
+        }
+        if (!storage.canRead() || !storage.canWrite()) {
+            throw new IllegalArgumentException(storage.getAbsolutePath() + " is not readable/writable");
+        }
+        this.storage = storage;
+    }
 
     @Override
     protected List<Resume> getList() {
@@ -25,7 +41,11 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     protected Resume innerGet(File key) {
-        return readResumeFromFile(key);
+        try {
+            return strategy.readResumeFromFile(new BufferedInputStream(new FileInputStream(key)));
+        } catch (IOException e) {
+            throw new StorageException("File read error", key.getName());
+        }
     }
 
     @Override
@@ -40,7 +60,11 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     protected void innerUpdate(File key, Resume resume) {
-        writeResume(key, resume);
+        try {
+            strategy.writeResume(resume, new BufferedOutputStream(new FileOutputStream(key)));
+        } catch (IOException e) {
+            throw new StorageException("File write error", resume.getUuid());
+        }
     }
 
     @Override
@@ -52,7 +76,12 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     protected void innerSave(File key, Resume resume) {
-        writeResume(key, resume);
+        try {
+            key.createNewFile();
+        } catch (IOException e) {
+            throw new StorageException("Couldn't create file " + key.getAbsolutePath(), key.getName());
+        }
+        innerUpdate(key, resume);
     }
 
     @Override
@@ -73,9 +102,5 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         }
         return files.length;
     }
-
-    protected abstract Resume readResumeFromFile(File key);
-
-    protected abstract void writeResume(File key, Resume resume);
 
 }
