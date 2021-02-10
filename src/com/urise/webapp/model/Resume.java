@@ -32,6 +32,14 @@ public class Resume implements Comparable<Resume>, Serializable {
         return fullName;
     }
 
+    public String getSections() {
+        StringBuilder result = new StringBuilder();
+        for (Map.Entry<SectionType, AbstractSection> entry : sections.entrySet()) {
+            result.append(entry.getKey().toString()).append(entry.getValue().toString());
+        }
+            return result.toString();
+    }
+
     public void setContact(ContactType contact, String data) {
         contacts.put(contact, data);
     }
@@ -46,10 +54,7 @@ public class Resume implements Comparable<Resume>, Serializable {
         if (this == o) return true;
         if (!(o instanceof Resume)) return false;
         Resume resume = (Resume) o;
-        return Objects.equals(uuid, resume.getUuid()) &&
-                Objects.equals(fullName, resume.getFullName()) &&
-                Objects.equals(sections, resume.sections) &&
-                Objects.equals(contacts, resume.contacts);
+        return Objects.equals(toString(), resume.toString());
     }
 
     @Override
