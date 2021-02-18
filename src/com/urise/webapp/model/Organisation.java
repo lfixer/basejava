@@ -19,4 +19,14 @@ public class Organisation extends AbstractSection {
         }
         return result.toString();
     }
+
+    public List<Experience> getList() {
+        return organizations;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Organisation)) return false;
+        return organizations.equals(((Organisation) obj).organizations);
+    }
 }

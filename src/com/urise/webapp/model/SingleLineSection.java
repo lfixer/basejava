@@ -17,4 +17,10 @@ public class SingleLineSection extends AbstractSection {
     public String toString() {
         return text;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof SingleLineSection)) return false;
+        return text.equals(((SingleLineSection) obj).text);
+    }
 }

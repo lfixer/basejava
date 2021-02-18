@@ -23,4 +23,10 @@ public class BulletedLineSection extends AbstractSection {
         }
         return result.toString();
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof BulletedLineSection)) return false;
+        return list.equals(((BulletedLineSection) obj).list);
+    }
 }

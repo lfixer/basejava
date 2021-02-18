@@ -2,19 +2,20 @@ package com.urise.webapp.model;
 
 import java.io.Serializable;
 import java.net.URL;
-import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
 
 public class Experience implements Serializable {
     private static final long SerialVersionUID = 1L;
 
     private final String name;
     private final URL url;
-    private final Case[] cases;
+    private final List<Case> cases;
 
     public Experience(String name, URL url, Case...cases) {
         this.name = name;
         this.url = url;
-        this.cases = cases;
+        this.cases = Arrays.asList(cases);
     }
 
     @Override
@@ -26,22 +27,11 @@ public class Experience implements Serializable {
         return result.toString();
     }
 
-    public static class Case implements Serializable{
-        private final LocalDate startDate;
-        private final LocalDate endDate;
-        private final String position;
-        private final String info;
-
-        public Case(String position, LocalDate startDate, LocalDate endDate, String info) {
-            this.position = position;
-            this.startDate = startDate;
-            this.endDate = endDate;
-            this.info = info;
-        }
-
-        @Override
-        public String toString() {
-            return startDate.getYear() + "." + startDate.getMonth() + " - " + endDate.getYear() + "." + endDate.getMonth() + "   " + position + "\n" + info + "\n";
-        }
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Experience)) return false;
+        Experience experience = (Experience) obj;
+        return name.equals(experience.name) && url.equals(experience.url) && cases.equals(experience.cases);
     }
+
 }
