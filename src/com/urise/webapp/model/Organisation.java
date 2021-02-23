@@ -1,6 +1,7 @@
 package com.urise.webapp.model;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Organisation extends AbstractSection {
     private static final long SerialVersionUID = 1L;
@@ -25,8 +26,15 @@ public class Organisation extends AbstractSection {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof Organisation)) return false;
-        return organizations.equals(((Organisation) obj).organizations);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Organisation)) return false;
+        Organisation that = (Organisation) o;
+        return organizations.equals(that.organizations);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(organizations);
     }
 }

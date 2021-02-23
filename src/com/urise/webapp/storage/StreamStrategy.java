@@ -8,13 +8,13 @@ import java.io.*;
 
 public class StreamStrategy implements Strategy {
 
-    public void writeResume(Resume resume, OutputStream os) throws IOException {
+    public void write(Resume resume, OutputStream os) throws IOException {
         try (ObjectOutputStream oos = new ObjectOutputStream(os)) {
             oos.writeObject(resume);
         }
     }
 
-    public Resume readResumeFromFile(InputStream is) {
+    public Resume read(InputStream is) {
         try (ObjectInputStream ois = new ObjectInputStream(is)) {
             return (Resume) ois.readObject();
         } catch (ClassNotFoundException | IOException e) {

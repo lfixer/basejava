@@ -7,7 +7,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 public interface Strategy {
-    void writeResume(Resume r, OutputStream os) throws IOException;
+    void write(Resume r, OutputStream os) throws IOException;
 
-    Resume readResumeFromFile(InputStream is) throws IOException;
+    Resume read(InputStream is) throws IOException;
 }

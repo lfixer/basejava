@@ -2,8 +2,10 @@ package com.urise.webapp.model;
 
 import java.io.Serializable;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class Experience implements Serializable {
     private static final long SerialVersionUID = 1L;
@@ -28,10 +30,52 @@ public class Experience implements Serializable {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof Experience)) return false;
-        Experience experience = (Experience) obj;
-        return name.equals(experience.name) && url.equals(experience.url) && cases.equals(experience.cases);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Experience)) return false;
+        Experience that = (Experience) o;
+        return name.equals(that.name) &&
+                url.equals(that.url) &&
+                cases.equals(that.cases);
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, url, cases);
+    }
+
+    public static class Case implements Serializable {
+        private final LocalDate startDate;
+        private final LocalDate endDate;
+        private final String position;
+        private final String info;
+
+        public Case(String position, LocalDate startDate, LocalDate endDate, String info) {
+            this.position = position;
+            this.startDate = startDate;
+            this.endDate = endDate;
+            this.info = info;
+        }
+
+        @Override
+        public String toString() {
+            return startDate.getYear() + "." + startDate.getMonth() + " - " + endDate.getYear() + "." + endDate.getMonth() + "   " + position + "\n" + info + "\n";
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof Case)) return false;
+            Case aCase = (Case) o;
+            return startDate.equals(aCase.startDate) &&
+                    endDate.equals(aCase.endDate) &&
+                    position.equals(aCase.position) &&
+                    info.equals(aCase.info);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(startDate, endDate, position, info);
+        }
+    }
 }

@@ -32,12 +32,12 @@ public class Resume implements Comparable<Resume>, Serializable {
         return fullName;
     }
 
-    public String getSections() {
-        StringBuilder result = new StringBuilder();
-        for (Map.Entry<SectionType, AbstractSection> entry : sections.entrySet()) {
-            result.append(entry.getKey().toString()).append(entry.getValue().toString());
-        }
-            return result.toString();
+    public Map<SectionType, AbstractSection> getSections() {
+        return sections;
+    }
+
+    public Map<ContactType, String> getContacts() {
+        return contacts;
     }
 
     public void setContact(ContactType contact, String data) {

@@ -33,7 +33,7 @@ public class FileStorage extends AbstractStorage<File> {
             throw new StorageException("Storage is empty");
         }
         List<Resume> resumes = new ArrayList<>(files.length);
-        for (File f: files) {
+        for (File f : files) {
             resumes.add(innerGet(f));
         }
         return resumes;
@@ -42,7 +42,7 @@ public class FileStorage extends AbstractStorage<File> {
     @Override
     protected Resume innerGet(File key) {
         try {
-            return strategy.readResumeFromFile(new BufferedInputStream(new FileInputStream(key)));
+            return strategy.read(new BufferedInputStream(new FileInputStream(key)));
         } catch (IOException e) {
             throw new StorageException("File read error", key.getName());
         }
@@ -61,7 +61,7 @@ public class FileStorage extends AbstractStorage<File> {
     @Override
     protected void innerUpdate(File key, Resume resume) {
         try {
-            strategy.writeResume(resume, new BufferedOutputStream(new FileOutputStream(key)));
+            strategy.write(resume, new BufferedOutputStream(new FileOutputStream(key)));
         } catch (IOException e) {
             throw new StorageException("File write error", resume.getUuid());
         }
@@ -88,7 +88,7 @@ public class FileStorage extends AbstractStorage<File> {
     public void clear() {
         File[] files = storage.listFiles();
         if (files != null) {
-            for (File f: files) {
+            for (File f : files) {
                 innerDelete(f);
             }
         }

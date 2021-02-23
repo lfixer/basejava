@@ -1,5 +1,7 @@
 package com.urise.webapp.model;
 
+import java.util.Objects;
+
 public class SingleLineSection extends AbstractSection {
     private static final long SerialVersionUID = 1L;
 
@@ -19,8 +21,15 @@ public class SingleLineSection extends AbstractSection {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof SingleLineSection)) return false;
-        return text.equals(((SingleLineSection) obj).text);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof SingleLineSection)) return false;
+        SingleLineSection that = (SingleLineSection) o;
+        return getText().equals(that.getText());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getText());
     }
 }

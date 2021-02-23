@@ -54,7 +54,7 @@ public class PathStorage extends AbstractStorage<Path> {
     @Override
     protected void innerUpdate(Path key, Resume resume) {
         try {
-            strategy.writeResume(resume, new BufferedOutputStream(Files.newOutputStream(key)));
+            strategy.write(resume, new BufferedOutputStream(Files.newOutputStream(key)));
         } catch (IOException e) {
             throw new StorageException("Path write error", resume.getUuid(), e);
         }
@@ -78,7 +78,7 @@ public class PathStorage extends AbstractStorage<Path> {
     @Override
     protected Resume innerGet(Path key) {
         try {
-            return strategy.readResumeFromFile(new BufferedInputStream(Files.newInputStream(key)));
+            return strategy.read(new BufferedInputStream(Files.newInputStream(key)));
         } catch (IOException e) {
             throw new StorageException("Path read error" + key.getFileName(), e);
         }

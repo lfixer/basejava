@@ -1,6 +1,7 @@
 package com.urise.webapp.model;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class BulletedLineSection extends AbstractSection {
     private static final long SerialVersionUID = 1L;
@@ -25,8 +26,15 @@ public class BulletedLineSection extends AbstractSection {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof BulletedLineSection)) return false;
-        return list.equals(((BulletedLineSection) obj).list);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof BulletedLineSection)) return false;
+        BulletedLineSection that = (BulletedLineSection) o;
+        return getList().equals(that.getList());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getList());
     }
 }
