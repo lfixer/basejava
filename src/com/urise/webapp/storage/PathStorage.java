@@ -13,14 +13,15 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class PathStorage extends AbstractStorage<Path> {
+
     private final Path storage;
 
     private final Strategy strategy;
 
-    protected PathStorage(String dir, StreamStrategy streamStrategy) {
+    protected PathStorage(String dir, Strategy strategy) {
         storage = Paths.get(dir);
         Objects.requireNonNull(storage, "directory must not be null");
-        this.strategy = streamStrategy;
+        this.strategy = strategy;
         if (!Files.isDirectory(storage) || !Files.isWritable(storage)) {
             throw new IllegalArgumentException(dir + " is not directory or is not writable");
         }
@@ -28,22 +29,12 @@ public class PathStorage extends AbstractStorage<Path> {
 
     @Override
     public void clear() {
-        try {
-            Files.list(storage).forEach(this::innerDelete);
-        } catch (IOException e) {
-            throw new StorageException("Path delete error");
-        }
+        filesList(storage).forEach(this::innerDelete);
     }
 
     @Override
     public int size() {
-        int size;
-        try (Stream<Path> files = Files.list(storage)) {
-            size = (int) files.count();
-        } catch (IOException e) {
-            throw new StorageException("Path reading error");
-        }
-        return size;
+        return ((int) filesList(storage).count());
     }
 
     @Override
@@ -61,8 +52,8 @@ public class PathStorage extends AbstractStorage<Path> {
     }
 
     @Override
-    protected boolean isNotExist(Path key) {
-        return !Files.isRegularFile(key);
+    protected boolean isExist(Path key) {
+        return Files.isRegularFile(key);
     }
 
     @Override
@@ -94,9 +85,13 @@ public class PathStorage extends AbstractStorage<Path> {
     }
 
     @Override
-    protected List<Resume> getList() {
+    protected List<Resume> getAll() {
+        return filesList(storage).map(this::innerGet).collect(Collectors.toList());
+    }
+
+    protected Stream<Path> filesList(Path storage) {
         try {
-            return Files.list(storage).map(this::innerGet).collect(Collectors.toList());
+            return Files.list(storage);
         } catch (IOException e) {
             throw new StorageException("Path read error" + storage.getFileName(), e);
         }

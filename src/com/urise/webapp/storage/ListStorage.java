@@ -19,7 +19,7 @@ public class ListStorage extends AbstractStorage<Integer> {
     }
 
     @Override
-    public List<Resume> getList() {
+    public List<Resume> getAll() {
         return storage;
     }
 
@@ -56,8 +56,8 @@ public class ListStorage extends AbstractStorage<Integer> {
     }
 
     @Override
-    protected boolean isNotExist(Integer key) {
-        return key == -1;
+    protected boolean isExist(Integer key) {
+        return key != -1;
     }
 
 }

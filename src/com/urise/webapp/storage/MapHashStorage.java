@@ -21,8 +21,8 @@ public class MapHashStorage extends AbstractStorage<Integer> {
     }
 
     @Override
-    protected boolean isNotExist(Integer key) {
-        return key == null;
+    protected boolean isExist(Integer key) {
+        return key != null;
     }
 
     @Override
@@ -50,7 +50,7 @@ public class MapHashStorage extends AbstractStorage<Integer> {
         storage.put(resume.getUuid().hashCode(), resume);
     }
 
-    public List<Resume> getList() {
+    public List<Resume> getAll() {
         return new ArrayList<>(storage.values());
     }
 }

@@ -27,7 +27,7 @@ public abstract class AbstractStorage<SK> implements Storage {
     public void save(Resume resume) {
         LOG.info("Save " + resume.getUuid());
         SK key = getKey(resume.getUuid());
-        if (isNotExist(key)) {
+        if (!isExist(key)) {
             innerSave(key, resume);
             System.out.println("Resume " + resume.getUuid() + " is saved");
         } else {
@@ -43,7 +43,7 @@ public abstract class AbstractStorage<SK> implements Storage {
 
     private SK checkKey(String uuid) {
         SK key = getKey(uuid);
-        if (isNotExist(key)) {
+        if (!isExist(key)) {
             LOG.warning("Resume " + uuid + " is not exist");
             throw new NotExistStorageException(uuid);
         }
@@ -51,16 +51,16 @@ public abstract class AbstractStorage<SK> implements Storage {
     }
 
     public List<Resume> getAllSorted() {
-        List<Resume> list = getList();
+        List<Resume> list = getAll();
         Collections.sort(list);
         return list;
     }
 
-    protected abstract List<Resume> getList();
+    protected abstract List<Resume> getAll();
 
     protected abstract Resume innerGet(SK key);
 
-    protected abstract boolean isNotExist(SK key);
+    protected abstract boolean isExist(SK key);
 
     protected abstract SK getKey(String uuid);
 

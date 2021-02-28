@@ -4,19 +4,22 @@ import com.urise.webapp.exeption.StorageException;
 import com.urise.webapp.model.Resume;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 public class FileStorage extends AbstractStorage<File> {
     private final File storage;
 
     private Strategy strategy;
 
-    protected FileStorage(File storage, StreamStrategy streamStrategy) {
+    protected FileStorage(File storage, Strategy strategy) {
         Objects.requireNonNull(storage, "directory must not be null");
 
-        this.strategy = streamStrategy;
+        this.strategy = strategy;
         if (!storage.isDirectory()) {
             throw new IllegalArgumentException(storage.getAbsolutePath() + " is not directory");
         }
@@ -27,13 +30,9 @@ public class FileStorage extends AbstractStorage<File> {
     }
 
     @Override
-    protected List<Resume> getList() {
-        File[] files = storage.listFiles();
-        if (files == null) {
-            throw new StorageException("Storage is empty");
-        }
-        List<Resume> resumes = new ArrayList<>(files.length);
-        for (File f : files) {
+    protected List<Resume> getAll() {
+        List<Resume> resumes = new ArrayList<>();
+        for (File f : filesList(storage)) {
             resumes.add(innerGet(f));
         }
         return resumes;
@@ -49,8 +48,8 @@ public class FileStorage extends AbstractStorage<File> {
     }
 
     @Override
-    protected boolean isNotExist(File key) {
-        return !key.exists();
+    protected boolean isExist(File key) {
+        return key.exists();
     }
 
     @Override
@@ -86,21 +85,22 @@ public class FileStorage extends AbstractStorage<File> {
 
     @Override
     public void clear() {
-        File[] files = storage.listFiles();
-        if (files != null) {
-            for (File f : files) {
-                innerDelete(f);
-            }
+        for (File f : filesList(storage)) {
+            innerDelete(f);
         }
     }
 
     @Override
     public int size() {
-        String[] files = storage.list();
+        return filesList(storage).length;
+    }
+
+    protected File[] filesList(File storage) {
+        File[] files = storage.listFiles();
         if (files == null) {
             throw new StorageException("Storage is empty");
         }
-        return files.length;
+        return files;
     }
 
 }

@@ -18,8 +18,8 @@ public class MapStorage extends AbstractStorage<String> {
     }
 
     @Override
-    protected boolean isNotExist(String key) {
-        return key == null;
+    protected boolean isExist(String key) {
+        return key != null;
     }
 
     @Override
@@ -47,7 +47,7 @@ public class MapStorage extends AbstractStorage<String> {
         storage.put(resume.getUuid(), resume);
     }
 
-    public List<Resume> getList() {
+    public List<Resume> getAll() {
         return new ArrayList<>(storage.values());
     }
 }
