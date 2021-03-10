@@ -1,6 +1,7 @@
 package com.urise.webapp;
 
 import com.urise.webapp.model.*;
+import com.urise.webapp.util.DateUtil;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -36,7 +37,7 @@ public class ResumeTestData {
 
         ArrayList<Experience> experience = new ArrayList<>();
         try {
-            experience.add(new Experience("Java Online Projects", new URL("https://javaops.ru/"), new Experience.Case("Автор проекта.", LocalDate.of(2013, 10, 1), LocalDate.now(), "Создание, организация и проведение Java онлайн проектов и стажировок.")));
+            experience.add(new Experience("Java Online Projects", new URL("https://javaops.ru/"), new Experience.Case("Автор проекта.", LocalDate.of(2013, 10, 1), DateUtil.NOW, "Создание, организация и проведение Java онлайн проектов и стажировок.")));
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }

@@ -2,6 +2,7 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.exeption.StorageException;
 import com.urise.webapp.model.Resume;
+import com.urise.webapp.storage.strategy.Strategy;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -29,12 +30,12 @@ public class PathStorage extends AbstractStorage<Path> {
 
     @Override
     public void clear() {
-        filesList(storage).forEach(this::innerDelete);
+        getFilesList().forEach(this::innerDelete);
     }
 
     @Override
     public int size() {
-        return ((int) filesList(storage).count());
+        return ((int) getFilesList().count());
     }
 
     @Override
@@ -86,10 +87,10 @@ public class PathStorage extends AbstractStorage<Path> {
 
     @Override
     protected List<Resume> getAll() {
-        return filesList(storage).map(this::innerGet).collect(Collectors.toList());
+        return getFilesList().map(this::innerGet).collect(Collectors.toList());
     }
 
-    protected Stream<Path> filesList(Path storage) {
+    protected Stream<Path> getFilesList() {
         try {
             return Files.list(storage);
         } catch (IOException e) {

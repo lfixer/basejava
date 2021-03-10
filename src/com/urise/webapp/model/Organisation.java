@@ -1,14 +1,21 @@
 package com.urise.webapp.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Organisation extends AbstractSection {
     private static final long SerialVersionUID = 1L;
 
-    private final List<Experience> organizations;
+    private ArrayList<Experience> organizations;
 
-    public Organisation(List<Experience> organizations) {
+    public Organisation() {
+    }
+
+    public Organisation(ArrayList<Experience> organizations) {
         this.organizations = organizations;
     }
 

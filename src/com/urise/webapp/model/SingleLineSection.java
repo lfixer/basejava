@@ -1,11 +1,17 @@
 package com.urise.webapp.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import java.util.Objects;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class SingleLineSection extends AbstractSection {
     private static final long SerialVersionUID = 1L;
 
-    private final String text;
+    private String text;
+
+    public SingleLineSection() {
+    }
 
     public SingleLineSection(String text) {
         this.text = text;
@@ -23,7 +29,7 @@ public class SingleLineSection extends AbstractSection {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof SingleLineSection)) return false;
+        if (!(o instanceof SingleLineSection) || o == null ) return false;
         SingleLineSection that = (SingleLineSection) o;
         return getText().equals(that.getText());
     }

@@ -2,14 +2,12 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.exeption.StorageException;
 import com.urise.webapp.model.Resume;
+import com.urise.webapp.storage.strategy.Strategy;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 public class FileStorage extends AbstractStorage<File> {
     private final File storage;
@@ -32,7 +30,7 @@ public class FileStorage extends AbstractStorage<File> {
     @Override
     protected List<Resume> getAll() {
         List<Resume> resumes = new ArrayList<>();
-        for (File f : filesList(storage)) {
+        for (File f : getFilesList()) {
             resumes.add(innerGet(f));
         }
         return resumes;
@@ -85,17 +83,17 @@ public class FileStorage extends AbstractStorage<File> {
 
     @Override
     public void clear() {
-        for (File f : filesList(storage)) {
+        for (File f : getFilesList()) {
             innerDelete(f);
         }
     }
 
     @Override
     public int size() {
-        return filesList(storage).length;
+        return getFilesList().length;
     }
 
-    protected File[] filesList(File storage) {
+    protected File[] getFilesList() {
         File[] files = storage.listFiles();
         if (files == null) {
             throw new StorageException("Storage is empty");

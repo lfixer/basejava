@@ -12,6 +12,9 @@ import org.junit.runners.Suite;
         MapHashStorageTest.class,
         FileStorageTest.class,
         PathStorageTest.class,
+        XmlPathStorageTest.class,
+        JsonPathStorageTest.class,
+        DataPathStorageTest.class,
 })
 public class RunAllTests {
 }
