@@ -3,22 +3,23 @@ package com.urise.webapp.model;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class BulletedLineSection extends AbstractSection {
     private static final long SerialVersionUID = 1L;
 
-    private ArrayList<String> list;
+    private List<String> list;
 
     public BulletedLineSection() {
     }
 
-    public BulletedLineSection(ArrayList<String> list) {
+    public BulletedLineSection(List<String> list) {
         this.list = list;
     }
 
-    public ArrayList<String> getList() {
+    public List<String> getList() {
         return list;
     }
 

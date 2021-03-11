@@ -10,12 +10,12 @@ import java.util.Objects;
 public class Organisation extends AbstractSection {
     private static final long SerialVersionUID = 1L;
 
-    private ArrayList<Experience> organizations;
+    private List<Experience> organizations = new ArrayList<>();
 
     public Organisation() {
     }
 
-    public Organisation(ArrayList<Experience> organizations) {
+    public Organisation(List<Experience> organizations) {
         this.organizations = organizations;
     }
 
