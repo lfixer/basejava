@@ -13,12 +13,9 @@ public class DataStreamSerializer implements Strategy {
             dos.writeUTF(resume.getUuid());
             dos.writeUTF(resume.getFullName());
             Map<ContactType, String> contacts = resume.getContacts();
-            dos.writeInt(contacts.size());
             writeWithException(contacts.entrySet(), dos, entry -> {
                 dos.writeUTF(entry.getKey().name());
-                System.out.println(entry.getKey().name());
                 dos.writeUTF(entry.getValue());
-                System.out.println(entry.getValue());
             });
             writeWithException(resume.getSections().entrySet(), dos, entry -> {
                 SectionType type = entry.getKey();
@@ -47,33 +44,20 @@ public class DataStreamSerializer implements Strategy {
             String uuid = dis.readUTF();
             String fullName = dis.readUTF();
             Resume resume = new Resume(uuid, fullName);
-            readMap(dis, () -> {
-                String a = dis.readUTF();
-                String b = dis.readUTF();
-                System.out.println("Contact:" + a + "Contact content:" + b);
-                resume.setContact(ContactType.valueOf(a), b);
-            });
-
+            readMap(dis, () -> resume.setContact(ContactType.valueOf(dis.readUTF()), dis.readUTF()));
             readMap(dis, () -> {
                 SectionType sectionType = SectionType.valueOf(dis.readUTF());
-                System.out.println(sectionType);
                 switch (sectionType) {
                     case PERSONAL, OBJECTIVE -> resume.setSection(sectionType, new SingleLineSection(dis.readUTF()));
                     case ACHIEVEMENT, QUALIFICATIONS -> resume.setSection(sectionType, new BulletedLineSection(readCollection(dis, dis::readUTF)));
                     case EXPERIENCE, EDUCATION -> resume.setSection(sectionType, new Organisation(readCollection(dis, () ->
-                            new Experience(dis.readUTF(), new URL(dis.readUTF()), readCollection(dis, () ->
+                            new Experience(dis.readUTF(), dis.readUTF(), readCollection(dis, () ->
                                     new Experience.Case(dis.readUTF(), readDate(dis), readDate(dis), dis.readUTF()))))));
                     default -> throw new IllegalStateException("Unexpected value: " + sectionType);
                 }
             });
             return resume;
         }
-    }
-
-    private AbstractSection readSection(DataInputStream dis) throws IOException {
-        return new Organisation(readCollection(dis, () ->
-                new Experience(dis.readUTF(), new URL(dis.readUTF()), readCollection(dis, () ->
-                        new Experience.Case(dis.readUTF(), readDate(dis), readDate(dis), dis.readUTF())))));
     }
 
     private interface CollectionWriter<T> {

@@ -3,8 +3,6 @@ package com.urise.webapp;
 import com.urise.webapp.model.*;
 import com.urise.webapp.util.DateUtil;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -36,20 +34,13 @@ public class ResumeTestData {
         resume.setSection(SectionType.QUALIFICATIONS, new BulletedLineSection(qualification));
 
         ArrayList<Experience> experience = new ArrayList<>();
-        try {
-            experience.add(new Experience("Java Online Projects", new URL("https://javaops.ru/"), new Experience.Case("Автор проекта.", LocalDate.of(2013, 10, 1), DateUtil.NOW, "Создание, организация и проведение Java онлайн проектов и стажировок.")));
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        }
+        experience.add(new Experience("Java Online Projects", "https://javaops.ru/", new Experience.Case("Автор проекта.", LocalDate.of(2013, 10, 1), DateUtil.NOW, "Создание, организация и проведение Java онлайн проектов и стажировок.")));
+
         resume.setSection(SectionType.EXPERIENCE, new Organisation(experience));
 
         ArrayList<Experience> education = new ArrayList<>();
-        try {
-            education.add(new Experience("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики", new URL("https://itmo.ru/ru/"), new Experience.Case("", LocalDate.of(1993, 9, 1), LocalDate.of(1976, 7, 1), "Аспирантура (программист С, С++)"),
-                    new Experience.Case("", LocalDate.of(1987, 9, 1), LocalDate.of(1993, 7, 1), "Инженер (программист Fortran, C)")));
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        }
+        education.add(new Experience("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики", "https://itmo.ru/ru/", new Experience.Case("", LocalDate.of(1993, 9, 1), LocalDate.of(1976, 7, 1), "Аспирантура (программист С, С++)"), new Experience.Case("", LocalDate.of(1987, 9, 1), LocalDate.of(1993, 7, 1), "Инженер (программист Fortran, C)")));
+
         resume.setSection(SectionType.EDUCATION, new Organisation(education));
         return resume;
     }

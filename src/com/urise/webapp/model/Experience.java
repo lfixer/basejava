@@ -6,8 +6,6 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,23 +17,20 @@ public class Experience implements Serializable {
     private static final long SerialVersionUID = 1L;
 
     private String name;
-    private URL url;
-    private List<Case> cases = new ArrayList<>();;
+    private String url;
+    private List<Case> cases = new ArrayList<>();
 
     public Experience() {
     }
 
-    public Experience(String name, URL url) {
-        this.name = name;
-        this.url = url;
-    }
 
-    public Experience(String name, URL url, Case...cases) throws MalformedURLException {
+    public Experience(String name, String url, Case...cases) {
         this(name, url, Arrays.asList(cases));
     }
 
-    public Experience(String name, URL url, List<Case> cases) throws MalformedURLException {
+    public Experience(String name, String url, List<Case> cases) {
         this.name = name;
+        this.url = url; //== null ? "" : url;
         this.url = url;
         this.cases = cases;
     }
@@ -99,7 +94,7 @@ public class Experience implements Serializable {
             this.position = position;
             this.startDate = startDate;
             this.endDate = endDate;
-            this.info = info;
+            this.info = info == null ? "" : info;
         }
 
         @Override
