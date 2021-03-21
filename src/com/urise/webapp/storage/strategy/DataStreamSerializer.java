@@ -25,14 +25,14 @@ public class DataStreamSerializer implements Strategy {
                     case ACHIEVEMENT, QUALIFICATIONS -> writeWithException(((BulletedLineSection) section).getList(), dos, dos::writeUTF);
                     case EXPERIENCE, EDUCATION -> writeWithException(((Organisation) section).getList(), dos, experience -> {
                         dos.writeUTF(experience.getName());
-                        String s = experience.getUrl() == null ? "" : experience.getUrl();
-                        dos.writeUTF(s);
+                        String s = experience.getUrl();
+                        dos.writeUTF(s == null ? "" : s);
                         writeWithException(experience.getCases(), dos, aCase -> {
                             dos.writeUTF(aCase.getPosition());
                             writeDate(dos, aCase.getStartDate());
                             writeDate(dos, aCase.getEndDate());
-                            String tmp = aCase.getInfo() == null ? "" : aCase.getInfo();
-                            dos.writeUTF(tmp);
+                            String tmp = aCase.getInfo();
+                            dos.writeUTF(tmp == null ? "" : tmp);
                         });
                     });
                 }

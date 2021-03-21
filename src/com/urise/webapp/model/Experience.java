@@ -47,14 +47,14 @@ public class Experience implements Serializable {
         if (this == o) return true;
         if (!(o instanceof Experience)) return false;
         Experience that = (Experience) o;
-        return Objects.equals(name, that.name) &&
-                Objects.equals(name, that.name) &&
-                (Objects.equals(name, that.name) || ((url == null && that.url == null))) ;
+        return getName().equals(that.getName()) &&
+                Objects.equals(getUrl(), that.getUrl()) &&
+                getCases().equals(that.getCases());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, url, cases);
+        return Objects.hash(getName(), getUrl(), getCases());
     }
 
     public String getName() {
@@ -106,15 +106,15 @@ public class Experience implements Serializable {
             if (this == o) return true;
             if (!(o instanceof Case)) return false;
             Case aCase = (Case) o;
-            return Objects.equals(startDate, aCase.startDate) &&
-                    Objects.equals(endDate, aCase.endDate) &&
-                    Objects.equals(position, aCase.position) &&
-                    (Objects.equals(info, aCase.info) || ((info == null && aCase.info == null)));
+            return getStartDate().equals(aCase.getStartDate()) &&
+                    getEndDate().equals(aCase.getEndDate()) &&
+                    getPosition().equals(aCase.getPosition()) &&
+                    Objects.equals(getInfo(), aCase.getInfo());
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(startDate, endDate, position, info);
+            return Objects.hash(getStartDate(), getEndDate(), getPosition(), getInfo());
         }
 
         public String getPosition() {
