@@ -34,12 +34,12 @@ public class ResumeTestData {
         resume.setSection(SectionType.QUALIFICATIONS, new BulletedLineSection(qualification));
 
         ArrayList<Experience> experience = new ArrayList<>();
-        experience.add(new Experience("Java Online Projects", new Experience.Case("Автор проекта.", LocalDate.of(2013, 10, 1), DateUtil.NOW)));
+        experience.add(new Experience("Java Online Projects", ";lkjhgfds", new Experience.Case("Автор проекта.", LocalDate.of(2013, 10, 1), DateUtil.NOW, ";lkjhgfds")));
 
         resume.setSection(SectionType.EXPERIENCE, new Organisation(experience));
 
         ArrayList<Experience> education = new ArrayList<>();
-        education.add(new Experience("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики", new Experience.Case("", LocalDate.of(1993, 9, 1), LocalDate.of(1976, 7, 1), "Аспирантура (программист С, С++)"), new Experience.Case("", LocalDate.of(1987, 9, 1), LocalDate.of(1993, 7, 1), "Инженер (программист Fortran, C)")));
+        education.add(new Experience("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики", "lkjhgfdsa", new Experience.Case("", LocalDate.of(1993, 9, 1), LocalDate.of(1976, 7, 1), "Аспирантура (программист С, С++)"), new Experience.Case("", LocalDate.of(1987, 9, 1), LocalDate.of(1993, 7, 1), "Инженер (программист Fortran, C)")));
 
         resume.setSection(SectionType.EDUCATION, new Organisation(education));
         return resume;

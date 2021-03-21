@@ -3,7 +3,6 @@ package com.urise.webapp.storage.strategy;
 import com.urise.webapp.model.*;
 
 import java.io.*;
-import java.net.URL;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -26,12 +25,14 @@ public class DataStreamSerializer implements Strategy {
                     case ACHIEVEMENT, QUALIFICATIONS -> writeWithException(((BulletedLineSection) section).getList(), dos, dos::writeUTF);
                     case EXPERIENCE, EDUCATION -> writeWithException(((Organisation) section).getList(), dos, experience -> {
                         dos.writeUTF(experience.getName());
-                        dos.writeUTF(experience.getUrl());
+                        String s = experience.getUrl() == null ? "" : experience.getUrl();
+                        dos.writeUTF(s);
                         writeWithException(experience.getCases(), dos, aCase -> {
                             dos.writeUTF(aCase.getPosition());
                             writeDate(dos, aCase.getStartDate());
                             writeDate(dos, aCase.getEndDate());
-                            dos.writeUTF(aCase.getInfo());
+                            String tmp = aCase.getInfo() == null ? "" : aCase.getInfo();
+                            dos.writeUTF(tmp);
                         });
                     });
                 }
@@ -50,9 +51,19 @@ public class DataStreamSerializer implements Strategy {
                 switch (sectionType) {
                     case PERSONAL, OBJECTIVE -> resume.setSection(sectionType, new SingleLineSection(dis.readUTF()));
                     case ACHIEVEMENT, QUALIFICATIONS -> resume.setSection(sectionType, new BulletedLineSection(readCollection(dis, dis::readUTF)));
-                    case EXPERIENCE, EDUCATION -> resume.setSection(sectionType, new Organisation(readCollection(dis, () ->
-                            new Experience(dis.readUTF(), dis.readUTF(), readCollection(dis, () ->
-                                    new Experience.Case(dis.readUTF(), readDate(dis), readDate(dis), dis.readUTF()))))));
+                    case EXPERIENCE, EDUCATION -> resume.setSection(sectionType, new Organisation(readCollection(dis, () -> {
+                            String name = dis.readUTF();
+                            String s = dis.readUTF();
+                            String url = (s.equals("")) ? null : s;
+                        return new Experience(name, url, readCollection(dis, () -> {
+                                    String position = dis.readUTF();
+                                    LocalDate startDate = readDate(dis);
+                                    LocalDate endDate = readDate(dis);
+                                    String tmp = dis.readUTF();
+                                    String info = (tmp.equals("")) ? null : tmp;
+                                    return new Experience.Case(position, startDate, endDate, info);
+                        }));
+                    })));
                     default -> throw new IllegalStateException("Unexpected value: " + sectionType);
                 }
             });

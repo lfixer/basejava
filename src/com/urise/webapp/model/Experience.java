@@ -27,13 +27,8 @@ public class Experience implements Serializable {
         this(name, url, Arrays.asList(cases));
     }
 
-    public Experience(String name, Case...cases) {
-        this(name, "", Arrays.asList(cases));
-    }
-
     public Experience(String name, String url, List<Case> cases) {
         this.name = name;
-        this.url = url;
         this.url = url;
         this.cases = cases;
     }
@@ -52,9 +47,9 @@ public class Experience implements Serializable {
         if (this == o) return true;
         if (!(o instanceof Experience)) return false;
         Experience that = (Experience) o;
-        return name.equals(that.name) &&
-                url.equals(that.url) &&
-                cases.equals(that.cases);
+        return Objects.equals(name, that.name) &&
+                Objects.equals(name, that.name) &&
+                (Objects.equals(name, that.name) || ((url == null && that.url == null))) ;
     }
 
     @Override
@@ -100,9 +95,6 @@ public class Experience implements Serializable {
             this.info = info;
         }
 
-        public Case(String position, LocalDate startDate, LocalDate endDate) {
-            this(position, startDate, endDate, "");
-        }
 
         @Override
         public String toString() {
@@ -114,10 +106,10 @@ public class Experience implements Serializable {
             if (this == o) return true;
             if (!(o instanceof Case)) return false;
             Case aCase = (Case) o;
-            return startDate.equals(aCase.startDate) &&
-                    endDate.equals(aCase.endDate) &&
-                    position.equals(aCase.position) &&
-                    info.equals(aCase.info);
+            return Objects.equals(startDate, aCase.startDate) &&
+                    Objects.equals(endDate, aCase.endDate) &&
+                    Objects.equals(position, aCase.position) &&
+                    (Objects.equals(info, aCase.info) || ((info == null && aCase.info == null)));
         }
 
         @Override
