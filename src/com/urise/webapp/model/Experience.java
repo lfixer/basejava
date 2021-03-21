@@ -23,14 +23,17 @@ public class Experience implements Serializable {
     public Experience() {
     }
 
-
     public Experience(String name, String url, Case...cases) {
         this(name, url, Arrays.asList(cases));
     }
 
+    public Experience(String name, Case...cases) {
+        this(name, "", Arrays.asList(cases));
+    }
+
     public Experience(String name, String url, List<Case> cases) {
         this.name = name;
-        this.url = url; //== null ? "" : url;
+        this.url = url;
         this.url = url;
         this.cases = cases;
     }
@@ -64,7 +67,7 @@ public class Experience implements Serializable {
     }
 
     public String getUrl() {
-        return url.toString();
+        return url;
     }
 
     public List<Case> getCases() {
@@ -94,7 +97,11 @@ public class Experience implements Serializable {
             this.position = position;
             this.startDate = startDate;
             this.endDate = endDate;
-            this.info = info == null ? "" : info;
+            this.info = info;
+        }
+
+        public Case(String position, LocalDate startDate, LocalDate endDate) {
+            this(position, startDate, endDate, "");
         }
 
         @Override

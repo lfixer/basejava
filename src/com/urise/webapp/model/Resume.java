@@ -53,7 +53,6 @@ public class Resume implements Comparable<Resume>, Serializable {
         contacts.put(contact, data);
     }
 
-
     public void setSection(SectionType section, AbstractSection data) {
         sections.put(section, data);
     }
