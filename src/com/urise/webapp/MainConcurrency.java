@@ -58,30 +58,7 @@ public class MainConcurrency {
             }
         });
         System.out.println(mainConcurrency.counter);
-
-
-        Object lock1 = new Object();
-        Object lock2 = new Object();
-        deadLock(lock1, lock2);
-        deadLock(lock2, lock1);
     }
-
-    private static void deadLock(Object lock1, Object lock2) {
-        new Thread(() -> {
-            synchronized (lock1) {
-                System.out.println(Thread.currentThread().getName() + ": Holding lock 1...");
-                try {
-                    Thread.sleep(10);
-                } catch (InterruptedException e) {
-                }
-                System.out.println(Thread.currentThread().getName() + ": Waiting lock 1...");
-                synchronized (lock2) {
-                    System.out.println(Thread.currentThread().getName() + ": Holding lock 1 & 2...");
-                }
-            }
-        }).start();
-    }
-
 
     private synchronized void inc() {
 //        synchronized (this) {
